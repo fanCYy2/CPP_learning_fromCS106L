@@ -1,121 +1,103 @@
-# Assignment 1: EnrollmentNavigator
+# 作业 1：EnrollmentNavigator（选课导航）
 
-## Setting up C++
+## 配置 C++ 环境
 
-Go find and follow the setup instructions in [Assignment Setup](../assignment-setup/README.md) to get your C++ compiler and autograder set up for this assignment.
+请找到并按照 [作业环境配置](../assignment-setup/README.md) 中的说明，为本次作业配置好 C++ 编译器和自动评分程序。
 
-## Overview
+## 概述
 
-It’s that time of the quarter again; time to use EnrollmentNavigator 🤗 Wootwoot.
-One thing everyone realizes in their Stanford career at one point is that they
-have to eventually graduate — and so enrolling in classes becomes a strategic
-endeavor to maximize the XP towards graduation, while also being able to sleep
-more than 4 hours a night!
+又到了每学期的这个时候：该用 EnrollmentNavigator 了 🤗 耶！
+每个人在斯坦福求学的某个时刻都会意识到：自己终究是要毕业的——于是选课就变成了一项策略性的任务：既要尽可能多地积累毕业所需的"经验值"，又要保证每晚能睡上 4 个小时以上！
 
-In this hopefully short assignment, we’re going to use example data from the
-ExploreCourses API to figure out which CS classes on ExploreCourses are
-offered, and which are not! We’ll be taking advantage of streams, while also exercising initialization and references in C++. Lets jump in ʕ•́ᴥ•̀ʔっ
+在这个（希望很简短的）作业中，我们将使用来自 ExploreCourses API 的示例数据，找出 ExploreCourses 上哪些 CS 课程开课了，哪些没有开课！我们会用到流（stream），同时练习 C++ 中的初始化和引用。开始吧 ʕ•́ᴥ•̀ʔっ
 
-There are only two files you should need to care about:
+你只需要关心两个文件：
 
-* `main.cpp`: All your code goes here 😀!
-* `utils.cpp`: Contains some utility functions. You'll use functions defined in this file, but you don't otherwise need to modify it.
+* `main.cpp`：你所有的代码都写在这里 😀！
+* `utils.cpp`：包含一些工具函数。你会用到这个文件中定义的函数，但除此之外不需要修改它。
 
-## Running your code
+## 运行你的代码
 
-To run your code, first you'll need to compile it. Open up a terminal (if you are using VSCode, hit <kbd>Ctrl+\`</kbd> or go to **Terminal > New Terminal** at the top). Then make sure that you are in the `assignment1/` directory and run:
+要运行代码，首先需要编译它。打开一个终端（如果你使用 VSCode，按 <kbd>Ctrl+\`</kbd>，或在顶部选择 **Terminal > New Terminal**）。然后确认你位于 `assignment1/` 目录下，并运行：
 
 ```sh
 g++ -std=c++20 main.cpp -o main
 ```
 
-Assuming that your code compiles without any compiler errors, you can now do:
+如果代码编译没有任何编译错误，你就可以运行：
 
 ```sh
 ./main
 ```
 
-which will actually run the `main` function in `main.cpp`. This will execute your code and then run an autograder that will check that your code is correct.
+这会真正运行 `main.cpp` 中的 `main` 函数。它会执行你的代码，然后运行自动评分程序来检查你的代码是否正确。
 
-As you are following the instructions below, we recommend intermittently compiling/testing with the autograder as a way to make sure you're on the right track!
+在按照下面的说明进行操作时，我们建议你时不时地编译并用自动评分程序测试一下，以确保你走在正确的方向上！
 
-> [!NOTE]  
-> ### Note for Windows
-> On Windows, you may need to compile your code using
+> [!NOTE]
+> ### Windows 用户注意
+> 在 Windows 上，你可能需要使用以下命令编译代码
 > ```sh
 > g++ -static-libstdc++ -std=c++20 main.cpp -o main
 > ```
-> in order to see output. Also, the output executable may be called `main.exe`, in which case you'll run your code with:
+> 才能看到输出。另外，生成的可执行文件可能叫 `main.exe`，这种情况下你需要这样运行代码：
 > ```sh
 > ./main.exe
 > ```
 
-## Part 0: Read the code and fill in the `Course` struct
+## 第 0 部分：阅读代码并补全 `Course` 结构体
 
-1. In this assignment, we'll be using the `Course` struct to represent records pulled from ExploreCourses in C++. Take a look at the (incomplete) definition of the `Course` struct in `main.cpp` and fill in the field definitions. Ultimately, we'll be using streams to generate `Course`s ---  remember what types streams deal with?
+1. 在本作业中，我们将用 `Course` 结构体在 C++ 中表示从 ExploreCourses 获取的记录。请查看 `main.cpp` 中（不完整的）`Course` 结构体定义，并补全各字段的定义。最终我们会用流来生成 `Course` 对象——还记得流处理的是什么类型吗？
 
-2. Take a look at the `main` function in `main.cpp`, and take special notice of how `courses` is passed into `parse_csv`, `write_courses_offered`,
-and `write_courses_not_offered`. Think about what these functions are doing. Do you need to change anything in the function definition? Spoiler, you do.
+2. 查看 `main.cpp` 中的 `main` 函数，特别留意 `courses` 是如何传入 `parse_csv`、`write_courses_offered` 和 `write_courses_not_offered` 的。思考这些函数在做什么。你需要修改函数定义中的什么吗？剧透一下：需要。
 
-## Part 1: `parse_csv`
+## 第 1 部分：`parse_csv`
 
-Check out `courses.csv`, it is a CSV file, with three columns: Title, Number of
-Units, and Quarter. Implement `parse_csv` so that, for each line in the csv file, it creates a struct `Course` containing the Title, Number of Units, and Quarter for that line.
+看看 `courses.csv`，它是一个 CSV 文件，有三列：Title（课程名）、Number of Units（学分数）和 Quarter（学期）。实现 `parse_csv`，使其对 CSV 文件中的每一行，创建一个包含该行 Title、Number of Units 和 Quarter 的 `Course` 结构体。
 
-A couple of things you need to think about:
-1. How are you going to read in `courses.csv`? Muahahaha, perhaps a
-stream 😏?
-2. How will you get each line in the file?
+你需要思考以下几点：
+1. 你打算如何读取 `courses.csv`？嘿嘿嘿，也许用一个流 😏？
+2. 你要如何获取文件中的每一行？
 
-### Hints
+### 提示
 
-1. Take a look at the `split` function we provide in `utils.cpp`. It may come in handy!
-    * Feel free to check out the implementation of `split` and ask us any questions about it – you
-should be able to reason about it since it’s using a `stringstream`.
-2. Each **line** is a record! *This is important, so we're saying it again :>)*
-3. In CSV files (and specifically in `courses.csv`), the first line is usually a row that defines the column names (a column header row). This line doesn't actually correspond to a `Course`, so you'll need to skip it somehow!
+1. 看看我们在 `utils.cpp` 中提供的 `split` 函数。它可能会派上用场！
+    * 欢迎查看 `split` 的实现，有任何问题都可以问我们——由于它用的是 `stringstream`，你应该能理解它的原理。
+2. 每一**行**就是一条记录！*这一点很重要，所以我们再说一遍 :>)*
+3. 在 CSV 文件中（特别是 `courses.csv`），第一行通常是定义列名的行（列标题行）。这一行并不对应任何 `Course`，所以你需要想办法跳过它！
 
-## Part 2: `write_courses_offered`
+## 第 2 部分：`write_courses_offered`
 
-Ok. Now you have a populated `courses` vector which has all of the records
-of the `courses.csv` file neatly stored in a `Course` struct! You find yourself
-interested in only the courses that are offered, right? **A course is considered offered if its Quarter field is not the string `“null”`.** In this function, write out to `“student_output/courses_offered.csv”` all the courses that don’t have
-`“null”` in the quarter field.
+好了，现在你已经有了一个填充好的 `courses` vector，`courses.csv` 文件中的所有记录都整整齐齐地存放在 `Course` 结构体中了！你只对开课的课程感兴趣，对吧？**如果一门课程的 Quarter 字段不是字符串 `"null"`，就认为它是开课的。** 在这个函数中，把所有 Quarter 字段不为 `"null"` 的课程写入 `"student_output/courses_offered.csv"`。
 
-> [!IMPORTANT]  
-> When writing out to the CSV file, please follow this format:
+> [!IMPORTANT]
+> 写入 CSV 文件时，请遵循以下格式：
 > ```
 > <Title>,<Number of Units>,<Quarter>
 > ```
-> Note that there are **no spaces** between the commas! The autograder will not be happy if this format is not followed!
+> 注意逗号之间**没有空格**！如果不遵循这个格式，自动评分程序会不高兴的！
 >
-> Also, **make sure to write out the column header row** as the first line in the output. This is the same line you had to skip in `courses.csv` for the previous step!
+> 另外，**请确保把列标题行写到输出的第一行**。也就是上一步中你在 `courses.csv` 中需要跳过的那一行！
 
-Once `write_courses_offered` has been called, we expect that all of the offered courses (and consequently all the courses you wrote to the output file) will be removed from the `all_courses` vector. **This means that after this
-function runs, `all_courses` should ONLY contain courses that are
-not offered!** 
+调用 `write_courses_offered` 之后，我们期望所有开课的课程（也就是你写入输出文件的所有课程）都会从 `all_courses` vector 中移除。**这意味着在这个函数运行结束后，`all_courses` 中应当只包含未开课的课程！**
 
-One way to do this is to keep track of the courses that are offered perhaps with another vector and delete them from `all_courses`. Just like in Python and many other languages, it is a bad idea to remove elements from a data structure while you are iterating over it, so you'll probably want to do this *after* you have written all offered courses to file.
+一种做法是用另一个 vector 记录开课的课程，然后把它们从 `all_courses` 中删除。和 Python 以及许多其他语言一样，在遍历一个数据结构的同时从中删除元素是个坏主意，所以你大概会想在把所有开课课程写入文件*之后*再进行删除。
 
-## Part 3: `write_courses_not_offered`
+## 第 3 部分：`write_courses_not_offered`
 
-So you’re curious about courses that aren’t offered... In the
-`write_courses_not_offered` function, write out to
-`“student_output/courses_not_offered.csv”` the courses in
-`unlisted_courses`. Remember since you deleted the courses that are
-offered in the previous step, `unlisted_courses` trivially contains ONLY courses that are not offered – lucky you. So this step should look really similar to Part 2 except shorter and a *tiny* bit simpler.
+你对那些没开课的课程也很好奇……在 `write_courses_not_offered` 函数中，把 `unlisted_courses` 中的课程写入 `"student_output/courses_not_offered.csv"`。记住，由于你在上一步中已经删除了开课的课程，`unlisted_courses` 中自然只包含未开课的课程——算你走运。所以这一步应该和第 2 部分非常相似，只是更短、也*稍微*简单一点。
 
-## 🚀 Submission Instructions
+## 🚀 提交说明
 
-After compiling and running, if your autograder looks like this:
+编译并运行后，如果你的自动评分程序输出如下：
 
-![An image showing a terminal window where the autograder has run with all tests passing](docs/autograder.png)
+![一张终端窗口的图片，显示自动评分程序已运行且所有测试均通过](docs/autograder.png)
 
-then you have finished the assignment! Woot woot. 
+那么你就完成了这次作业！耶！
 
-To submit the assignment:
-1. Send your code from `main.cpp` to `cs106l-aut2627-staff@lists.stanford.edu` from your Stanford email, with the email subject of `CS106L Assignment 1 Submission`.
+提交作业的方法：
+1. 用你的斯坦福邮箱把 `main.cpp` 中的代码发送到 `cs106l-aut2627-staff@lists.stanford.edu`，邮件主题为 `CS106L Assignment 1 Submission`。
 
-Your deliverable should be:
+你需要提交的内容：
 
 - `main.cpp`

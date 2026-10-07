@@ -1,68 +1,68 @@
-# Assignment 6: Explore Courses
+# 作业 6：Explore Courses（课程浏览）
 
-Due Friday, May 22nd at 11:59PM
+截止时间：5 月 22 日（周五）晚上 11:59
 
-## Overview
+## 概述
 
-In this assignment you will be exercising your understanding of `std::optional`. We'll be making use of the same `courses.csv` from assignment 1. You are tasked to write one function for this assignment, which attempts to find the a `Course` in the `CourseDatabase` object, and return it.
-You'll also explore the monadic operations that come with the `std::optional` class. Take a look at the code and review the `CourseDatabase` class to understand the interface.
+在本作业中，你将练习对 `std::optional` 的理解。我们会使用作业 1 中的同一个 `courses.csv`。本次作业你需要编写一个函数：尝试在 `CourseDatabase` 对象中查找某个 `Course` 并返回它。
+你还将探索 `std::optional` 类自带的单子操作（monadic operations）。请阅读代码并查看 `CourseDatabase` 类，了解它的接口。
 
-## Running your code
+## 运行你的代码
 
-To run your code, first you'll need to compile it. Open up a terminal (if you are using VSCode, hit <kbd>Ctrl+\`</kbd> or go to **Terminal > New Terminal** at the top). Then make sure that you are in the `assignment6/` directory and run:
+要运行代码，首先需要编译它。打开一个终端（如果你使用 VSCode，按 <kbd>Ctrl+\`</kbd>，或在顶部选择 **Terminal > New Terminal**）。然后确认你位于 `assignment6/` 目录下，并运行：
 
 ```sh
 g++ -std=c++23 main.cpp -o main
 ```
 
-Assuming that your code compiles without any compiler errors, you can now do:
+如果代码编译没有任何编译错误，你就可以运行：
 
 ```sh
 ./main
 ```
 
-which will actually run the `main` function in `main.cpp`.
+这会真正运行 `main.cpp` 中的 `main` 函数。
 
-As you are following the instructions below, we recommend intermittently compiling/testing with the autograder as a way to make sure you're on the right track!
+在按照下面的说明进行操作时，我们建议你时不时地编译并用自动评分程序测试一下，以确保你走在正确的方向上！
 
 > [!NOTE]
 >
-> ### Note for Windows
+> ### Windows 用户注意
 >
-> On Windows, you may need to compile your code using
+> 在 Windows 上，你可能需要使用以下命令编译代码
 >
 > ```sh
 > g++ -static-libstdc++ -std=c++23 main.cpp -o main
 > ```
 >
-> in order to see output. Also, the output executable may be called `main.exe`, in which case you'll run your code with:
+> 才能看到输出。另外，生成的可执行文件可能叫 `main.exe`，这种情况下你需要这样运行代码：
 >
 > ```sh
 > ./main.exe
 > ```
 
-## Part 0: Include `<optional>`
+## 第 0 部分：包含 `<optional>`
 
-At the top of the `main.cpp` include `<optional>`, we're going to make use of `std::optional` in this assignment!
+在 `main.cpp` 顶部 include `<optional>`，本次作业我们要用到 `std::optional`！
 
-## Part 1: Write the `find_course` function
+## 第 1 部分：编写 `find_course` 函数
 
-This function takes in a string `course_title`, and the function should try to find the `course` inside of the private `courses` member of the `CourseDatabase` object. What should the return type be? (hint: there may or may not be a `Course` for the `course_title` passed in)
+这个函数接受一个字符串 `course_title`，它应该尝试在 `CourseDatabase` 对象的私有成员 `courses` 中查找对应的 `course`。返回类型应该是什么？（提示：传入的 `course_title` 可能有、也可能没有对应的 `Course`）
 
 > [!NOTE]
-> You need to change the type returned by `find_course` which is currenty `FillMeIn`.
+> 你需要修改 `find_course` 的返回类型，它目前是 `FillMeIn`。
 
-## Part 2: Modifying the `main` function
+## 第 2 部分：修改 `main` 函数
 
-Notice that we call the `find_course` here in the `main` function:
+注意我们在 `main` 函数中这样调用了 `find_course`：
 
 ```cpp
 auto course = db.find_course(argv[1]);
 ```
 
-Now, you need to make use of the [monadic operations](https://en.cppreference.com/w/cpp/utility/optional) to populate the `output` string properly. Let's walk through how to do this.
+现在，你需要使用[单子操作](https://en.cppreference.com/w/cpp/utility/optional)来正确地填充 `output` 字符串。我们一步步来看怎么做。
 
-Here's the behavior that you want to recreate, **without using any conditionals** like `if` statements:
+下面是你需要重现的行为，**但不能使用任何条件语句**（例如 `if` 语句）：
 ```cpp
 if (course.has_value()) {
     std::cout << "Found course: " << course->title << ","
@@ -72,83 +72,83 @@ if (course.has_value()) {
 }
 ```
 
-Very simply, if there is a course then the line at the bottom of `main` 
+简单来说，如果找到了课程，那么 `main` 末尾的这一行
 
 ```cpp
 std::cout << output << std::end;
 ```
 
-Should produce:
+应该输出：
 ```bash
 Found course: <title>,<number_of_units>,<quarter>
 ```
 
-if there is no course then
+如果没有找到课程，那么
 
 ```cpp
 std::cout << output << std::end;
 ```
 
-Should produce:
+应该输出：
 ```bash
 Course not found.
 ```
 
-### Monadic Operations
+### 单子操作
 
-There are three monadic operations: [`and_then`](https://en.cppreference.com/w/cpp/utility/optional/and_then), [`transform`](https://en.cppreference.com/w/cpp/utility/optional/transform), and [`or_else`](https://en.cppreference.com/w/cpp/utility/optional/or_else). Read the description of each of them in the lecture slides, and take a look at [the standard library documentation](https://en.cppreference.com/w/cpp/utility/optional). You will only need to use 2 of the mondadic operations.
+一共有三个单子操作：[`and_then`](https://en.cppreference.com/w/cpp/utility/optional/and_then)、[`transform`](https://en.cppreference.com/w/cpp/utility/optional/transform) 和 [`or_else`](https://en.cppreference.com/w/cpp/utility/optional/or_else)。请阅读课程幻灯片中对它们各自的描述，并查看[标准库文档](https://en.cppreference.com/w/cpp/utility/optional)。你只需要用到其中 2 个单子操作。
 
-Your code should end up looking something like this:
+你的代码最终应该大致是这样的：
 
 ```cpp
 std::string output = course
     ./* monadic function one */ (/* ... */)
     ./* monadic function two */ (/* ... */)
-    .value();                                  // OR `.value_or(...)`, see below
+    .value();                                  // 或者 `.value_or(...)`，见下文
 ```
 
-It can help to **think about what the type of `output` is and work backwards from there**. Pay attention to what each of the monadic functions does, as described in the hint below.
+**思考 `output` 的类型是什么，然后从那里倒推**，会很有帮助。请留意每个单子函数的作用，如下面的提示所述。
 
-> [!NOTE]  
-> Recall what the role is of each of the monadic functions. The official C++ library doesn't do a good job explaining this, so we have included a short reference here. Suppose `T` and `U` are arbitrary types.
+> [!NOTE]
+> 回顾一下每个单子函数的作用。C++ 官方文档在这方面解释得不太好，所以我们在这里附上一份简短的参考。假设 `T` 和 `U` 是任意类型。
 >
 > ```cpp
-> /** 
->  * tl;dr; 
->  * Calls a function to produce a new optional if there is a value; otherwise, returns nothing.
+> /**
+>  * 太长不看版：
+>  * 如果有值，就调用一个函数来产生一个新的 optional；否则什么都不返回。
 >  *
->  * The function passed to `and_then` takes a non-optional instance of type `T` and returns a `std::optional<U>`.
->  * If the optional has a value, `and_then` applies the function to its value and returns the result.
->  * If the optional doesn't have a value (i.e. it is `std::nullopt`), it returns `std::nullopt`.
+>  * 传给 `and_then` 的函数接受一个类型为 `T` 的非 optional 实例，并返回一个 `std::optional<U>`。
+>  * 如果 optional 有值，`and_then` 会把函数应用到这个值上并返回结果。
+>  * 如果 optional 没有值（即它是 `std::nullopt`），则返回 `std::nullopt`。
 >  */
 > template <typename U>
 > std::optional<U> std::optional<T>::and_then(std::function<std::optional<U>(T)> func);
-> 
+>
 > /**
->  * tl;dr; 
->  * Applies a function to the stored value if present, wrapping the result in an optional, or returns nothing otherwise.
+>  * 太长不看版：
+>  * 如果存有值，就对其应用一个函数并把结果包装成 optional；否则什么都不返回。
 >  *
->  * The function passed to `transform` takes a non-optional instance of type `T` and returns a non-optional instance of type `U`.
->  * If the optional has a value, `transform` applies the function to its value and returns the result wrapped in an `std::optional<U>`.
->  * If the optional doesn't have a value (i.e. it is `std::nullopt`), it returns `std::nullopt`.
+>  * 传给 `transform` 的函数接受一个类型为 `T` 的非 optional 实例，并返回一个类型为 `U` 的非 optional 实例。
+>  * 如果 optional 有值，`transform` 会把函数应用到这个值上，并返回包装在 `std::optional<U>` 中的结果。
+>  * 如果 optional 没有值（即它是 `std::nullopt`），则返回 `std::nullopt`。
 >  */
 > template <typename U>
 > std::optional<U> std::optional<T>::transform(std::function<U(T)> func);
-> 
-> /** 
->  * tl;dr; 
->  * Returns the optional itself if it has a value; otherwise, it calls a function to produce a new optional.
+>
+> /**
+>  * 太长不看版：
+>  * 如果 optional 有值就返回它自身；否则调用一个函数来产生一个新的 optional。
 >  *
->  * The opposite of `and_then`.
->  * The function passed to `or_else` takes in no arguments and returns a `std::optional<U>`.
->  * If the optional has a value, `or_else` returns it.
->  * If the optional doesn't have a value (i.e. it is `std::nullopt`), `or_else invokes the function and returns the result.
+>  * 与 `and_then` 相反。
+>  * 传给 `or_else` 的函数不接受任何参数，并返回一个 `std::optional<U>`。
+>  * 如果 optional 有值，`or_else` 就返回它。
+>  * 如果 optional 没有值（即它是 `std::nullopt`），`or_else` 会调用该函数并返回其结果。
 >  */
 > template <typename U>
 > std::optional<U> std::optional<T>::or_else(std::function<std::optional<U>(T)> func);
 > ```
 >
-> For example, given a `std::optional<T> opt` object, the monadic operations could be invoked as follows:
+> 例如，给定一个 `std::optional<T> opt` 对象，可以像下面这样调用单子操作：
 >
 > ```cpp
 > opt
@@ -157,20 +157,20 @@ It can help to **think about what the type of `output` is and work backwards fro
 >   .or_else([]() -> std::optional<U> { return /* ... */; })
 > ```
 >
-> <sup>Note that the `->` notation in the lambda function is a way of explicitly writing out the return type of the function!</sup>
+> <sup>注意，lambda 函数中的 `->` 写法是一种显式写出函数返回类型的方式！</sup>
 >
-> Notice that since each method returns an `std::optional`, you can chain them together. If you are certain that the optional will have a value at the end of the chain, you could call [`.value()`](https://en.cppreference.com/w/cpp/utility/optional/value) to get the value. Otherwise, you could call [`.value_or(fallback)`](https://en.cppreference.com/w/cpp/utility/optional/value_or) to get the result or some other `fallback` value if the optional doesn't have a value.
+> 注意，由于每个方法都返回一个 `std::optional`，你可以把它们链式调用。如果你确定在链的末尾 optional 一定有值，可以调用 [`.value()`](https://en.cppreference.com/w/cpp/utility/optional/value) 来获取该值。否则，你可以调用 [`.value_or(fallback)`](https://en.cppreference.com/w/cpp/utility/optional/value_or)，在 optional 有值时获取结果，没有值时获取另外的 `fallback` 值。
 
 
 
-## 🚀 Submission Instructions
+## 🚀 提交说明
 
-If you pass all tests, you are ready to submit! To submit the assignment:
-1. Please complete the feedback form [at this link](https://forms.gle/aGuFqLyhB18mNoPKA). 
-2. Submit your assignment on [Paperless](https://paperless.stanford.edu)!
+如果你通过了所有测试，就可以提交了！提交作业的方法：
+1. 请填写[这个链接](https://forms.gle/aGuFqLyhB18mNoPKA)中的反馈表。
+2. 在 [Paperless](https://paperless.stanford.edu) 上提交你的作业！
 
-Your deliverable should be:
+你需要提交的内容：
 
 - `main.cpp`
 
-You may resubmit as many times as you'd like before the deadline.
+在截止日期之前，你可以重复提交任意多次。

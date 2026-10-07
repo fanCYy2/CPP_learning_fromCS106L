@@ -1,123 +1,120 @@
 <p align="center">
-  <img src="docs/bjarne.jpg" alt="Bjarne Stroustrup writing the declaration of a class on a whiteboard" />
+  <img src="docs/bjarne.jpg" alt="Bjarne Stroustrup 在白板上写一个类的声明" />
 </p>
 
-# Assignment 3: Make a Class
+# 作业 3：编写一个类
 
-Due Friday May 1st at 11:59PM
+截止时间：5 月 1 日（周五）晚上 11:59
 
-## Overview
+## 概述
 
 <pre>
 (\_/)
-(•x•) <b>Howdy</b>
+(•x•) <b>你好呀</b>
 (<☕)
 </pre>
 
-Now that we've learned about classes, it’s time for you to make your own! Have fun with this, let the creative juices flow. Your class can represent anything, and feel free to make more than one if you'd like. There are some requirements though. As long as you meet these requirements, you’ll get credit for this assignment! 🙂
+既然我们已经学习了类，现在轮到你自己写一个了！尽情享受吧，让创意自由流淌。你的类可以表示任何东西，如果愿意的话也可以写不止一个。不过还是有一些要求的。只要满足这些要求，你就能拿到这次作业的分数！🙂
 
-There are four files you'll work with for this assignment:
+本次作业你会用到四个文件：
 
-* `class.h` - This is the header file for your class, where the class **declaration** will go.
-* `class.cpp` - This is the `.cpp` file for your class, where the class **definition** will go.
-* `sandbox.cpp` - You'll construct an instance of your class here.
-* `short_answer.txt` - You'll answer a few short answer questions here.
+* `class.h` - 这是你的类的头文件，类的**声明**写在这里。
+* `class.cpp` - 这是你的类的 `.cpp` 文件，类的**定义**写在这里。
+* `sandbox.cpp` - 你将在这里构造一个你的类的实例。
+* `short_answer.txt` - 你将在这里回答几道简答题。
 
-To download the starter code for this assignment, please see the instructions for [**Getting Started**](../README.md#getting-started) on the course assignments repository.
+要下载本次作业的初始代码，请参阅课程作业仓库中的 [**入门指南（Getting Started）**](../README.md#getting-started) 说明。
 
-## Running your code
+## 运行你的代码
 
-To run your code, first you'll need to compile it. Open up a terminal (if you are using VSCode, hit <kbd>Ctrl+\`</kbd> or go to **Terminal > New Terminal** at the top). Then make sure that you are in the `assignment3/` directory and run:
+要运行代码，首先需要编译它。打开一个终端（如果你使用 VSCode，按 <kbd>Ctrl+\`</kbd>，或在顶部选择 **Terminal > New Terminal**）。然后确认你位于 `assignment3/` 目录下，并运行：
 
 ```sh
 g++ -std=c++20 main.cpp class.cpp -o main
 ```
 
-Assuming that your code compiles without any compiler errors, you can now do:
+如果代码编译没有任何编译错误，你就可以运行：
 
 ```sh
 ./main
 ```
 
-which will actually run the `main` function in `main.cpp`.
+这会真正运行 `main.cpp` 中的 `main` 函数。
 
-As you are following the instructions below, we recommend intermittently compiling/testing with the autograder as a way to make sure you're on the right track!
+在按照下面的说明进行操作时，我们建议你时不时地编译并用自动评分程序测试一下，以确保你走在正确的方向上！
 
 > [!NOTE]
 >
-> ### Note for Windows
+> ### Windows 用户注意
 >
-> On Windows, you may need to compile your code using
+> 在 Windows 上，你可能需要使用以下命令编译代码
 >
 > ```sh
 > g++ -static-libstdc++ -std=c++20 main.cpp class.cpp -o main
 > ```
 >
-> in order to see output. Also, the output executable may be called `main.exe`, in which case you'll run your code with:
+> 才能看到输出。另外，生成的可执行文件可能叫 `main.exe`，这种情况下你需要这样运行代码：
 >
 > ```sh
 > ./main.exe
 > ```
 
-## Part 1: Making your class
+## 第 1 部分：编写你的类
 
-Let your creative juices flow! Fill in `class.h` and `class.cpp` to create your own custom class. Please refer to the relevant slides from Tuesday's lecture on classes for more information. Your class can represent pretty much anything you want, as long as it meets the following requirements.
+让创意自由流淌吧！填写 `class.h` 和 `class.cpp` 来创建你自己的自定义类。更多信息请参考周二关于类的课程中的相关幻灯片。你的类几乎可以表示任何你想要的东西，只要满足以下要求。
 
 > [!IMPORTANT]
-> ### Class Requirements
+> ### 类的要求
 >
-> Your class must:
-> 1. Have a custom constructor taking **one or more** parameters.
-> 2. Have a default (parameterless) constructor (i.e. constructor overloading).
-> 3. Have one or more private member fields (i.e. variables).
-> 4. Have one or more private member functions.
->     - Remember, private functions are like what happens underneath the hood of your car! They are a necessary part of the implementation of a class, but shouldn't be exposed in the public interface. Try to think of a private member function that logically makes sense in the context of your class.
-> 5. Have **at least one** public getter function for one of the private fields.
->     - E.g. if `int data` is the field, you must have a function called `get_data` or `getData` with the signature <pre lang="cpp">int getData();</pre>
->     - The getter function should also be marked `const`. Refer to Thursday's lecture on `const` correctness if you are unfamiliar!
-> 6. Have at least one public setter function for one of the private fields.
->     - E.g. if `int data` is the field, you must have a function called `set_data` or `setData` with the signature <pre lang="cpp">void setData(int value);</pre>
+> 你的类必须：
+> 1. 有一个接受**一个或多个**参数的自定义构造函数。
+> 2. 有一个默认（无参）构造函数（即构造函数重载）。
+> 3. 有一个或多个私有成员字段（即变量）。
+> 4. 有一个或多个私有成员函数。
+>     - 记住，私有函数就像汽车引擎盖下面发生的事情！它们是类的实现中必不可少的一部分，但不应该暴露在公共接口中。试着想一个在你的类的上下文中逻辑上说得通的私有成员函数。
+> 5. 为某个私有字段提供**至少一个**公有的 getter 函数。
+>     - 例如，如果字段是 `int data`，你必须有一个名为 `get_data` 或 `getData` 的函数，其签名为 <pre lang="cpp">int getData();</pre>
+>     - getter 函数还应该标记为 `const`。如果你不熟悉，请参考周四关于 `const` 正确性的课程！
+> 6. 为某个私有字段提供至少一个公有的 setter 函数。
+>     - 例如，如果字段是 `int data`，你必须有一个名为 `set_data` 或 `setData` 的函数，其签名为 <pre lang="cpp">void setData(int value);</pre>
 
-Note that this is the bare minimum to get credit for the assignment. Please feel free to go above and beyond these requirements or create more than one class if you want extra practice!
+注意，这只是拿到本次作业分数的最低要求。如果你想多练习，欢迎超越这些要求，或者创建不止一个类！
 
 > [!NOTE]
-> For brownie points, you can choose to create a class template instead of a regular class using the `template <typename T>` notation discussed on Thursday's lecture. This is totally optional!
+> 想加分的话，你可以选择使用周四课上讨论过的 `template <typename T>` 语法创建一个类模板，而不是普通的类。这完全是可选的！
 >
-> Note that if you do decide to create a class template, you **must remove class.cpp
-> from the compilation command.** For example, on Mac/Linux, the compilation
-> command will be:
+> 注意，如果你决定创建类模板，**必须把 class.cpp 从编译命令中去掉。** 例如，在 Mac/Linux 上，编译命令将变为：
 >
 > ```sh
 > g++ -std=c++20 main.cpp -o main
 > ```
-> 
-> Remember to also swap the includes so that the `.h` file includes the `.cpp`
-> file at the end of the file, as discussed in Thursday's lecture.
+>
+> 还要记得调换 include 关系，让 `.h` 文件在文件末尾 include `.cpp` 文件，正如周四课上讨论的那样。
 
-Now that you've created your class, let's actually use it. **Inside of the `sandbox` function in `sandbox.cpp`, construct an instance of your class!** You can do so however you like (call default constructor, use uniform initialization, etc.).
+既然你已经创建了自己的类，那就来实际用一用吧。**在 `sandbox.cpp` 的 `sandbox` 函数中，构造一个你的类的实例！** 你可以用任何你喜欢的方式来构造（调用默认构造函数、使用统一初始化等）。
 
-To see if you did everything correctly, compile and run your code! The autograder will give you feedback on your class and check if it meets the specifications above.
+要检查你是否一切都做对了，请编译并运行你的代码！自动评分程序会对你的类给出反馈，并检查它是否满足上述规范。
 
-## Part 2: Short answer questions
+## 第 2 部分：简答题
 
-Please answer the following questions inside `short_answer.txt`. We expect about 2-3 sentences per question.
+请在 `short_answer.txt` 中回答以下问题。我们期望每个问题大约回答 2-3 句话。
 
 > [!IMPORTANT]
 > `short_answer.txt`
-> - **Q1:** What’s const-correctness and why is it important?
-> - **Q2:** Is your class const-correct? How do you know?
+> - **Q1：** 什么是 const 正确性（const-correctness）？它为什么重要？
+> - **Q2：** 你的类是 const 正确的吗？你是怎么知道的？
 
-## 🚀 Submission Instructions
+## 🚀 提交说明
 
-To submit the assignment:
-1. Please complete the feedback form [at this link](https://forms.gle/GmhzW9NycQ44hyF86). 
-2. Submit your assignment on [Paperless](https://paperless.stanford.edu)!
+提交作业的方法：
+1. 请填写[这个链接](https://forms.gle/GmhzW9NycQ44hyF86)中的反馈表。
+2. 在 [Paperless](https://paperless.stanford.edu) 上提交你的作业！
 
-Your deliverable should be:
+你需要提交的内容：
 
 * `class.h`
 * `class.cpp`
 * `sandbox.cpp`
 * `short_answer.txt`
 
-You may resubmit as many times as you'd like before the deadline.
+在截止日期之前，你可以重复提交任意多次。

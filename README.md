@@ -1,5 +1,5 @@
-# CS106L Assignments 
+# CS106L 作业
 
-This repository contains starter code for Stanford CS106L, a course on Standard C++ programming.
+本仓库包含斯坦福 CS106L 课程（一门关于标准 C++ 编程的课程）的作业初始代码。
 
-To get started, [follow the setup instructions in the setup](/assignment-setup/README.md)!
+开始之前，请先[按照环境配置说明进行配置](/assignment-setup/README.md)！

@@ -1,124 +1,124 @@
 <p align="center">
-  <img src="docs/marriage_pact.png" alt="Marriage Pact Logo" />
+  <img src="docs/marriage_pact.png" alt="Marriage Pact 标志" />
 </p>
 
-# Assignment 2: Marriage Pact
+# 作业 2：Marriage Pact（婚约配对）
 
-## Overview
+## 概述
 
-Happy assignment 2! This is meant to be a very short and sweet bit of practice to get you started working with the STL's containers and pointers.
+作业 2 快乐！这是一个非常简短、轻松的小练习，帮助你开始使用 STL 的容器和指针。
 
-These are the files you need to care about:
+你需要关心的文件有：
 
-- `main.cpp`: All your code goes here 😀!
-- `short_answer.txt`: Short answer responses go here 📝!
+- `main.cpp`：你所有的代码都写在这里 😀！
+- `short_answer.txt`：简答题的回答写在这里 📝！
 
-To download the starter code for this assignment, please see the instructions for [**Getting Started**](../README.md#getting-started) on the course assignments repository.
+要下载本次作业的初始代码，请参阅课程作业仓库中的 [**入门指南（Getting Started）**](../README.md#getting-started) 说明。
 
-## Running your code
+## 运行你的代码
 
-To run your code, first you'll need to compile it. Open up a terminal (if you are using VSCode, hit <kbd>Ctrl+\`</kbd> or go to **Terminal > New Terminal** at the top). Then make sure that you are in the `assignment2/` directory and run:
+要运行代码，首先需要编译它。打开一个终端（如果你使用 VSCode，按 <kbd>Ctrl+\`</kbd>，或在顶部选择 **Terminal > New Terminal**）。然后确认你位于 `assignment2/` 目录下，并运行：
 
 ```sh
 g++ -std=c++20 main.cpp -o main
 ```
 
-Assuming that your code compiles without any compiler errors, you can now do:
+如果代码编译没有任何编译错误，你就可以运行：
 
 ```sh
 ./main
 ```
 
-which will actually run the `main` function in `main.cpp`.
+这会真正运行 `main.cpp` 中的 `main` 函数。
 
-As you are following the instructions below, we recommend intermittently compiling/testing with the autograder as a way to make sure you're on the right track!
+在按照下面的说明进行操作时，我们建议你时不时地编译并用自动评分程序测试一下，以确保你走在正确的方向上！
 
 > [!NOTE]
 >
-> ### Note for Windows
+> ### Windows 用户注意
 >
-> On Windows, you may need to compile your code using
+> 在 Windows 上，你可能需要使用以下命令编译代码
 >
 > ```sh
 > g++ -static-libstdc++ -std=c++20 main.cpp -o main
 > ```
 >
-> in order to see output. Also, the output executable may be called `main.exe`, in which case you'll run your code with:
+> 才能看到输出。另外，生成的可执行文件可能叫 `main.exe`，这种情况下你需要这样运行代码：
 >
 > ```sh
 > ./main.exe
 > ```
 
-## Part 0: Setup
+## 第 0 部分：准备工作
 
-Welcome to the Marriage Pact! Before you begin, we'll need to know your name. Please change the constant `kYourName` at the top of `main.cpp` from `"STUDENT TODO"` to your full name (with a space between first and last).
+欢迎来到 Marriage Pact！开始之前，我们需要知道你的名字。请把 `main.cpp` 顶部的常量 `kYourName` 从 `"STUDENT TODO"` 改成你的全名（名和姓之间用一个空格隔开）。
 
-## Part 1: Get all applicants
+## 第 1 部分：获取所有申请者
 
-You’ve been waiting for days to get your Marriage Pact initials this year, and they’ve finally arrived in your inbox! This year, they’re implementing a new rule: your match MUST share your own initials to be eligible. However, even after talking about it for hours with your friends, you have no idea who your match could be! There are thousands of students on campus, and you can’t just go through the whole roster by hand to draft up a list of your potential soulmates. Fortunately enough for you, you’re in CS106L, and you remember that C++ has a pretty quick method of going through collected, similar information – containers!
+你已经等了好几天，就为了拿到今年 Marriage Pact 给你的配对对象的首字母缩写，现在它终于出现在你的收件箱里了！今年他们实施了一条新规则：你的配对对象必须和你的首字母缩写相同才有资格。然而，即使和朋友们讨论了好几个小时，你还是完全不知道你的配对对象会是谁！校园里有成千上万的学生，你不可能手动翻遍整个名册来列出你所有潜在的灵魂伴侣。幸运的是，你正在上 CS106L，而且你记得 C++ 有一种能快速处理一组同类信息的方法——容器！
 
-We’ve included a `.txt` file of all of the (fictional) students who signed up for The Marriage Pact this year (`students.txt`). Each line includes the first and last name of the student. You will first write the function `get_applicants`:
+我们提供了一个 `.txt` 文件（`students.txt`），里面是今年报名参加 Marriage Pact 的所有（虚构的）学生。每一行包含一个学生的名和姓。你首先要编写函数 `get_applicants`：
 
 > [!IMPORTANT]
 >
 > ### `get_applicants`
 >
-> From the `.txt` file, parse all of the names into a set. Each line contained in the file named `filename` is a single applicant's name. In your implementation, you are free to choose between an ordered (`std::set`) and unordered set (`std::unordered_set`) as you wish! If you do choose to use an unordered set, please change the relevant function definitions!
+> 从 `.txt` 文件中把所有名字解析到一个 set 中。名为 `filename` 的文件中每一行都是一位申请者的名字。在你的实现中，可以根据自己的意愿自由选择有序集合（`std::set`）或无序集合（`std::unordered_set`）！如果你选择使用无序集合，请相应地修改相关的函数定义！
 
-Additionally, please answer the following short answer question in `short_answer.txt`:
+此外，请在 `short_answer.txt` 中回答以下简答题：
 
 > [!IMPORTANT]
 >
 > ### `short_answer.txt`
 >
-> **Q1:** It is your choice to use either an ordered or unordered set. In a few sentences, what are some of the tradeoffs between the two? Additionally, please give an example (that has not been shown in lecture) of a valid hash function that could be used to hash student names for an unordered set.
+> **Q1：** 使用有序集合还是无序集合由你决定。请用几句话说明两者之间有哪些权衡取舍。此外，请给出一个（课堂上没有展示过的）有效哈希函数的例子，它可以用于在无序集合中对学生姓名进行哈希。
 
 > [!NOTE]
-> All names appearing in this assignment are fictitious. Any resemblance to real persons, living or dead, is purely coincidental.
+> 本作业中出现的所有姓名均为虚构。如与真实人物（无论在世或已故）有任何雷同，纯属巧合。
 
-## Part 2: Find matches
+## 第 2 部分：寻找配对
 
-Great detective work! Now that you’ve narrowed down your list of potential soulmates, it’s time to put it to the test. After a long day of acapella and consulting club meetings, you return to your dorm to learn from your roommate that there is a mixer for Marriage Pact matches at Main Quad that night! Your best chance of finding true love is imminent — if only you can get out of your Ultimate Frisbee practice. Quickly, you decide to interview everyone who shares your initials at the mixer, and you get to work coding up a function that will compile the order for you automatically.
+侦探工作干得漂亮！现在你已经缩小了潜在灵魂伴侣的范围，是时候检验一下了。在参加完一整天的无伴奏合唱团和咨询俱乐部活动之后，你回到宿舍，从室友那里得知当晚在 Main Quad 有一场 Marriage Pact 配对者的联谊会！你找到真爱的最佳机会就在眼前——只要你能逃掉极限飞盘训练。你迅速决定在联谊会上和每一个与你首字母缩写相同的人聊一聊，于是开始动手编写一个函数，自动帮你排好面谈顺序。
 
-For this section, you will write the functions `find_matches` and `get_match`:
+在这一部分，你需要编写函数 `find_matches` 和 `get_match`：
 
 > [!IMPORTANT]
 >
 > ### `find_matches`
 >
-> From the set `students` (generated in the previous part), take all names that share initials with the parameter `name` and place pointers to them in a new `std::queue`.
+> 从（上一部分生成的）集合 `students` 中，找出所有与参数 `name` 首字母缩写相同的名字，并把指向它们的指针放入一个新的 `std::queue` 中。
 >
-> - If you’re having trouble figuring out how to iterate through a set, it could be helpful to look back over [Thursday’s lecture on iterators and pointers](https://office365stanford-my.sharepoint.com/:p:/g/personal/jtrb_stanford_edu/EbOKUV784rBHrO3JIhUSAUgBvuIGn5rSU8h3xbq-Q1JFfQ?e=BlZwa7).
-> - You will need to be familiar with the operations of a `std::queue` for this part. Take a look at cppreference's documentation [here](https://en.cppreference.com/w/cpp/container/queue).
-> - Hint: It might help to define a helper function that computes the initials of some student's name. Then you can use that helper function to compare the initials of `name` with the initials of each name in `students`.
+> - 如果你不知道如何遍历一个 set，回顾一下[周四关于迭代器和指针的课程](https://office365stanford-my.sharepoint.com/:p:/g/personal/jtrb_stanford_edu/EbOKUV784rBHrO3JIhUSAUgBvuIGn5rSU8h3xbq-Q1JFfQ?e=BlZwa7)可能会有帮助。
+> - 这一部分你需要熟悉 `std::queue` 的各种操作。可以看看 cppreference 的文档[这里](https://en.cppreference.com/w/cpp/container/queue)。
+> - 提示：定义一个计算学生姓名首字母缩写的辅助函数可能会有帮助。然后你就可以用这个辅助函数，把 `name` 的首字母缩写与 `students` 中每个名字的首字母缩写进行比较。
 
-From here please implement the function `get_match` to find your “one true match.”:
+接下来，请实现函数 `get_match` 来找到你的"唯一真爱"：
 
 > [!IMPORTANT]
 >
 > ### `get_match`
 >
-> Gets your “one true match” from the queue of all possible matches. This can be determined as you see fit; choose some method of acquiring one student from the queue, ideally something with a bit more thought than a single `pop()`, but it doesn’t have to be particularly complicated! Consider random values or other methods of selection.
+> 从所有可能配对的队列中选出你的"唯一真爱"。具体怎么选由你决定；选择某种从队列中取出一个学生的方法，最好比单纯调用一次 `pop()` 多花点心思，但也不必特别复杂！可以考虑使用随机数或其他选择方式。
 >
-> If your initials have no matches in the dataset, print `“NO MATCHES FOUND.”` Better luck next year 😢
+> 如果数据集中没有与你首字母缩写相同的人，请输出 `"NO MATCHES FOUND."`。明年好运 😢
 
-Afterwards, answer the following question in `short_answer.txt`:
+之后，请在 `short_answer.txt` 中回答以下问题：
 
 > [!IMPORTANT]
 >
 > ### `short_answer.txt`
 >
-> **Q2:** Note that we are saving pointers to names in the queue, not names themselves. Why might this be desired in this problem? What happens if the original set where the names are stored goes out of scope and the pointers are referenced?
+> **Q2：** 注意我们在队列中保存的是指向名字的指针，而不是名字本身。为什么在这个问题中可能需要这样做？如果存放这些名字的原始集合超出了作用域，而这些指针又被解引用，会发生什么？
 
-## 🚀 Submission Instructions
+## 🚀 提交说明
 
-To submit the assignment:
-1. Please compile your files `main.cpp` and `short_answer.txt` together into a `.zip`. 
-2. Send your `.zip` file to `cs106l-aut2627-staff@lists.stanford.edu` from your Stanford email, with the email subject of `CS106L Assignment 2 Submission`.
+提交作业的方法：
+1. 请把你的 `main.cpp` 和 `short_answer.txt` 一起打包成一个 `.zip` 文件。
+2. 用你的斯坦福邮箱把 `.zip` 文件发送到 `cs106l-aut2627-staff@lists.stanford.edu`，邮件主题为 `CS106L Assignment 2 Submission`。
 
-Your deliverable should be:
+你需要提交的内容：
 
 - `main.cpp`
 - `short_answer.txt`
 
-You may resubmit as many times as you'd like before the deadline.
+在截止日期之前，你可以重复提交任意多次。
